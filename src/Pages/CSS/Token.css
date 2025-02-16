@@ -1,5 +1,5 @@
-.login-page {
-    padding-top:px;
+.verify-token-page {
+    padding-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,40 +8,39 @@
     background: #f4f4f4;
 }
 
-
-.login {
+.verify-token {
     background: white;
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 500px;
-    height: 500px;
+    width: 450px;
+    height: 300px;
     text-align: center;
 }
 
-
-.login h2 {
-    margin: 20px;
-    font-size: 34px;
+.verify-token h2 {
+    font-size: 28px;
     font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
 }
 
-.login-input-fields {
+.verify-token-input {
     display: flex;
     flex-direction: column;
     text-align: left;
     margin-bottom: 15px;
 }
 
-.login-input-fields label {
+.verify-token-input label {
     font-size: 16px;
-    margin-bottom: 5px;
     color: #555;
     font-weight: bold;
+    margin-bottom: 7px;
 }
 
-.login-input-fields input {
-    padding: 10px;
+.verify-token-input input {
+    padding: 12px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 18px;
@@ -49,49 +48,36 @@
     height: 32px;
 }
 
-.login-input-fields input:focus {
+.verify-token-input input:focus {
     border-color: #007bff;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
 }
 
-
-.login-btn button {
+.verify-token-btn button {
     width: 100%;
     height: 50px;
     padding: 10px;
-    background:  #2C9CF0;
+    background: #2C9CF0;
     color: #fff;
     border: none;
     border-radius: 5px;
     font-size: 20px;
     cursor: pointer;
-    margin-top:10px;
-    
+    margin-top: 15px;
+    transition: all 0.3s ease-in-out;
 }
 
-.login-btn button:hover {
+.verify-token-btn button:hover {
     background: #1b7dc4;
     font-size: 19px;
 }
 
-.login-signup-agree {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    color: #555;
-    margin-top: 10px;
-}
-
-.login-signup-agree input {
-    margin-right: 8px;
-    transform: scale(1.1);
-    cursor: pointer;
-}
-
-
-.login p{
-    margin-top:20px;
+.error-message {
+    color: red;
+    background: #ffe6e6;
     padding: 10px;
-    font-size:19px;
-    
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    text-align: center;
 }
