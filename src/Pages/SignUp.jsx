@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import "./CSS/SignUp.css";
 import api from '../api/config';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const SignUp = () => {
   const [signupData, setSignupData] = useState({
@@ -15,6 +16,9 @@ const SignUp = () => {
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
+  const { loginUser } = useAuth();
+
+
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -47,8 +51,11 @@ const SignUp = () => {
       });
 
       console.log("Signup successful:", response.data);
-      localStorage.setItem('authToken', response.data.token);
-      localStorage.setItem('role', response.data.role);
+      loginUser({
+        token: response.data.token,
+        email: signupData.email,
+        role: response.data.role
+      });
       navigate('/login'); 
     } catch (err) {
       console.error("Signup error:", err.response?.data);

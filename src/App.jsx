@@ -1,6 +1,7 @@
 import React from 'react'
 import NavBar from './Components/NavBar/NavBar'
 import { BrowserRouter as Router,Routes,Route,Link } from 'react-router-dom'
+import { AuthProvider } from './context/AuthContext';
 import Homepage from './Pages/Homepage'
 import CreateEvent from './Pages/CreateEvent'
 import BookEvent from './Pages/BookEvent'
@@ -19,7 +20,7 @@ const App = () => {
   return (
     
     <div>
-     
+     <AuthProvider>
       <Router>
         <NavBar/>
         {/* <Dashboard/> */}
@@ -47,7 +48,7 @@ const App = () => {
 
         </Routes>
       </Router>
-
+      </AuthProvider>
 
     </div>
   )

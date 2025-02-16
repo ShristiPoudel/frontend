@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import "./CSS/login.css";
 import api from '../api/config';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+
 
 const Login = () => {
   const [loginData, setLoginData] = useState({
@@ -12,6 +14,8 @@ const Login = () => {
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
+  const { loginUser } = useAuth();
+
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -40,9 +44,12 @@ const Login = () => {
      
 
       console.log("Login successful:", response.data);
-      localStorage.setItem('authToken', response.data.token);
-       localStorage.setItem('userEmail', loginData.email);
-       localStorage.setItem('role', response.data.role);
+      loginUser({
+        token: response.data.token,
+        email: loginData.email,
+        role: response.data.role
+      });
+
     
       navigate('/auth-token'); 
     } catch (err) {

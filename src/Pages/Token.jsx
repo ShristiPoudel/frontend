@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./CSS/Token.css";
 import api from '../api/config';
+import { useAuth } from '../context/AuthContext'
 
 const Token = () => {
  
@@ -10,6 +11,7 @@ const Token = () => {
     const [error, setError] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const navigate = useNavigate();
+    const { loginUser } = useAuth(); 
   
     useEffect(() => {
       const storedEmail = localStorage.getItem('userEmail');
@@ -41,7 +43,11 @@ const Token = () => {
         });
   
         console.log("Token verified:", response.data);
-        localStorage.setItem('authToken', response.data.token); 
+        loginUser({
+          token: response.data.token,
+          email: email,
+          role: response.data.role
+      });
         navigate('/dashboard'); 
       } catch (err) {
         console.error("Token verification error:", err.response?.data);
