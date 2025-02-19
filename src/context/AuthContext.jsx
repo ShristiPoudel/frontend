@@ -1,21 +1,34 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
+
+
 const AuthContext = createContext();
 
-export const AuthProvider = ({ children}) => {
+export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Initialize user state from localStorage on mount
+
   useEffect(() => {
-    const token = localStorage.getItem('authToken');
-    const email = localStorage.getItem('userEmail');
-    const role = localStorage.getItem('role');
+    try {
+      const token = localStorage.getItem('authToken');
+      const email = localStorage.getItem('userEmail');
+      const role = localStorage.getItem('role');
+      
 
-    if (token && email && role) {
-      setUser({ token, email, role });
+      if (token && email && role) {
+        setUser({ token, email, role });
+        setIsLoggedIn(true);
+      }
+      else{
+        setIsLoggedIn(false);
+      }
+    } catch (error) {
+      console.error("Error loading authentication data:", error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }, []);
 
   const loginUser = (userData) => {
@@ -24,6 +37,8 @@ export const AuthProvider = ({ children}) => {
     localStorage.setItem('userEmail', email);
     localStorage.setItem('role', role);
     setUser({ token, email, role });
+    setIsLoggedIn(true);
+
   };
 
   const logoutUser = () => {
@@ -31,10 +46,11 @@ export const AuthProvider = ({ children}) => {
     localStorage.removeItem('userEmail');
     localStorage.removeItem('role');
     setUser(null);
+    setIsLoggedIn(false);
   };
 
   return (
-    <AuthContext.Provider value={{ user, loginUser, logoutUser, loading }}>
+    <AuthContext.Provider value={{ user, isLoggedIn, loginUser, logoutUser, loading }}>
       {children}
     </AuthContext.Provider>
   );

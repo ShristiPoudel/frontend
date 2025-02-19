@@ -1,0 +1,63 @@
+/* Profile.css */
+.profile-container {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border: 2px solid #e0e0e0;
+  }
+  
+  .profile-name {
+    font-size: 1.5rem;
+    color: #333;
+    margin: 0.5rem 0;
+    font-weight: 500;
+  }
+  
+  .profile-email {
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .profile-bio {
+    color: #444;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 400px;
+    margin: 1rem auto;
+    padding: 0 1rem;
+  }
+  
+  .create-event-btn {
+    background: none;
+    color: #2c3e50;
+    border: 2px solid #2c3e50;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 1rem;
+  }
+  
+  .create-event-btn:hover {
+    background: #2c3e50;
+    color: white;
+  }
+  
+  /* Loading states */
+  .loading-container,
+  .error-container {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+  }

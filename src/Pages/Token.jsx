@@ -17,10 +17,13 @@ const Token = () => {
       const storedEmail = localStorage.getItem('userEmail');
       console.log("Stored Email:", storedEmail);
       if (!storedEmail) {
-        navigate('/login'); // Redirect if no email is found
+        navigate('/login'); 
       } else {
         setEmail(storedEmail);
-      }
+       }
+       
+
+
     }, [navigate]);
   
     const handleTokenChange = (e) => {
@@ -41,14 +44,28 @@ const Token = () => {
           email: email,
           token: token
         });
+        
   
+        const role = response.data.role;
+
+        localStorage.setItem("authToken",response.data.token);
+        console.log(localStorage.setItem("authToken,response.data.token"));
+        
         console.log("Token verified:", response.data);
         loginUser({
           token: response.data.token,
           email: email,
-          role: response.data.role
+          role: response.data.role,
+          isLoggedIn: true
       });
-        navigate('/dashboard'); 
+      console.log(response.data.isLoggedIn);
+      // console.log("Response data:", response.data);
+      // console.log(response.data.token)
+      if (role === 'organizer') {
+        navigate('/organizer-dashboard');
+      } else {
+        navigate('/attendee-dashboard');
+      }
       } catch (err) {
         console.error("Token verification error:", err.response?.data);
         setError(err.response?.data?.message || 'Invalid token. Please try again.');

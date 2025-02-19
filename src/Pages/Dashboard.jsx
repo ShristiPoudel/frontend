@@ -6,6 +6,7 @@ import {  MdOutlineEventAvailable } from "react-icons/md"
 import { MdOutlineManageHistory } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { IoMdLogOut } from "react-icons/io";
+import NavBar from '../Components/NavBar/NavBar'
 
 
 const Dashboard = () => {
@@ -18,23 +19,23 @@ const Dashboard = () => {
             <ul className='dashboard-list-items'>
               <li>
                <FaGauge/>
-                <Link to='/dashboard/'>Dashboard</Link>
+                <Link to='/organizer-dashboard/'>Dashboard</Link>
               </li>
               <li>
                <MdOutlineEventAvailable/> 
-               <Link to= '/dashboard/create-events'>Create Event</Link>
+               <Link to= '/organizer-dashboard/create-events'>Create Event</Link>
               </li>
               <li>
                 <MdOutlineManageHistory/>
-                <Link to='/dashboard/manage-events'>Manage Events</Link>
+                <Link to='/organizer-dashboard/manage-events'>Manage Events</Link>
               </li>
               <li>
                 <CgProfile/>
-                <Link to='/dashboard/profile'>Profile</Link>
+                <Link to='/profile'>Profile</Link>
               </li>
               <li>
                <IoMdLogOut/> 
-               <Link to='/dashboard/log-out'>Logout</Link>
+               <Link to='log-out'>Logout</Link>
               </li>
             </ul>
           </div>

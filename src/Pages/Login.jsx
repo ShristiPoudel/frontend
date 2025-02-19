@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./CSS/login.css";
 import api from '../api/config';
@@ -6,7 +6,9 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 
+
 const Login = () => {
+  
   const [loginData, setLoginData] = useState({
     email: '',
     password: ''
@@ -14,9 +16,15 @@ const Login = () => {
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
-  const { loginUser } = useAuth();
-
-
+  const { loginUser,isLoggedIn } = useAuth();
+  
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/auth-token");
+    }
+  }, [isLoggedIn, navigate]);
+ 
+  
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setLoginData(prev => ({
@@ -47,11 +55,11 @@ const Login = () => {
       loginUser({
         token: response.data.token,
         email: loginData.email,
-        role: response.data.role
+        role: response.data.role,
+        isLoggedIn: true
+        
       });
-
-    
-      navigate('/auth-token'); 
+      navigate("/auth-token");
     } catch (err) {
       console.error("Login error:", err.response?.data);
       setError(err.response?.data?.message || 'Login failed. Please try again.');
