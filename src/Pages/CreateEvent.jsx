@@ -1,86 +1,61 @@
 import React, { useState } from "react";
-import "./CSS/CreateEvent.css";
-import api from "../api/config";
-
+import "./CSS/CreateEvent.css"; 
+import api from '../api/config';
 const CreateEvent = () => {
-  const [createData, setCreateData] = useState({
+  const [formData, setFormData] = useState({
     title: "",
-    category: "",
-    // session: "",
-    time_start: "",
+    category: [],
     event_dates: "",
+    time_start: "",
     venue_name: "",
     venue_location: "",
     venue_capacity: "",
     vip_price: "",
     common_price: "",
     description: "",
+    image: null,
   });
 
-  const [imageData, setImageData] = useState(null);
-  const [error,setError]=useState(null);
+  const [token] = useState(localStorage.getItem("authToken") || "");
+  const [error, setError] = useState(null);
 
-  
   const handleChange = (e) => {
-    setCreateData({ ...createData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    if (name === "category") {
+      setFormData({ ...formData, category: Array.from(e.target.selectedOptions, option => option.value) });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
-  
-  const addEvent = async (e) => {
+  const handleFileChange = (e) => {
+    setFormData({ ...formData, image: e.target.files[0] });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);
-  
-    try {
-      // Validate required fields
-      if (!createData.event_dates || !createData.time_start || !imageData) {
-        throw new Error("All fields are required");
+    const data = new FormData();
+    
+    Object.keys(formData).forEach(key => {
+      if (key === "category") {
+        formData[key].forEach(category => data.append("category", category));
+      } else {
+        data.append(key, formData[key]);
       }
-  
-      // Date handling
-      const eventDate = new Date(createData.event_dates);
-      if (isNaN(eventDate)) throw new Error("Invalid event date");
-      const formattedDateString = eventDate.toISOString().split('T')[0];
-  
-      // Time handling
-      const timeValue = createData.time_start;
-      const formattedTime = timeValue.includes(':') 
-        ? `${timeValue}:00` 
-        : `${timeValue}:00:00`;
-  
-      // Category handling
-      const categories = createData.category
-        .split(',')
-        .map(cat => cat.trim())
-        .filter(cat => cat !== '');
-  
-      // Build FormData
-      const formData = new FormData();
-      formData.append('title', createData.title);
-      formData.append('event_dates', formattedDateString);
-      formData.append('time_start', formattedTime);
-      formData.append('venue_name', createData.venue_name);
-      formData.append('venue_location', createData.venue_location);
-      formData.append('venue_capacity', createData.venue_capacity);
-      formData.append('vip_price', createData.vip_price);
-      formData.append('common_price', createData.common_price);
-      formData.append('description', createData.description);
-      formData.append('category', JSON.stringify(categories));
-      formData.append('image', imageData);
-  
-      // API call
-      const token = localStorage.getItem("authToken");
-      const response = await api.post("/events/", formData, {
+    });
+
+    try {
+      const response = await api.post("/events/", data, {
         headers: {
           "Content-Type": "multipart/form-data",
-          "Authorization": `Token ${token}`,
+          Authorization: `Token ${token}`,
         },
       });
-      
-      console.log("Event created:", response.data);
-      
+      alert("Event created successfully!");
+      console.log(response.data);
     } catch (error) {
-      console.error("Error:", error);
-      setError(error.message || "Failed to create event");
+      console.error("Error creating event:", error.response?.data || error.message);
+      setError(error.response?.data || "An error occurred");
     }
   };
 
@@ -88,169 +63,159 @@ const CreateEvent = () => {
     <div className="create-container">
       <div className="create-event">
         <h1>Create an Event</h1>
-        {error && <div className="error-message">{error}</div>}
-        <form className="post-event-fields" onSubmit={addEvent}>
-          
+        {error && <div className="error-message">{JSON.stringify(error)}</div>}
+        
+        <form className="post-event-fields" onSubmit={handleSubmit} encType="multipart/form-data">
           <div className="form-group">
-            <label htmlFor="name">Event Name:</label>
+            <label htmlFor="title">Event Title *</label>
             <input
-              id="name"
               type="text"
+              id="title"
               name="title"
               placeholder="Enter event name"
+              value={formData.title}
               onChange={handleChange}
               required
             />
           </div>
 
-        
           <div className="form-group">
-            <label htmlFor="category">Event Category:</label>
-            <input
+            <label htmlFor="category">Event Category *</label>
+            <select 
               id="category"
-              type="text"
-              name="category"
-              placeholder="E.g., Music, Tech, Sports"
+              name="category" 
+              multiple
+              value={formData.category} 
+              onChange={handleChange}
+              className="category-select"
+            >
+              <option value="Music">Music</option>
+              <option value="Tech">Tech</option>
+              <option value="Sports">Sports</option>
+            </select>
+            <small>(Hold CTRL to select multiple)</small>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="event_dates">Event Date *</label>
+            <input
+              type="date"
+              id="event_dates"
+              name="event_dates"
+              value={formData.event_dates}
               onChange={handleChange}
               required
             />
           </div>
 
-          
-          {/* <div className="form-group">
-            <label htmlFor="session">Session (Optional):</label>
-            <select id="session" name="session" onChange={handleChange}>
-              <option value="">-- Select Session --</option>
-              <option value="First">First</option>
-              <option value="Second">Second</option>
-              <option value="Third">Third</option>
-            </select>
-          </div> */}
-
-          
           <div className="form-group">
-            <label htmlFor="date">Event Date:</label>
-            <input id="date"
-             type="date" 
-             name="event_dates"
-              onChange={handleChange}
-               required />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="time">Event Time:</label>
-            <input id="time"
-             type="time"
-              name="time_start"
-               onChange={handleChange}
-                required />
-          </div>
-
-          
-          <div className="form-group">
-            <label htmlFor="venue">Venue Name:</label>
+            <label htmlFor="time_start">Event Time *</label>
             <input
-              id="venue"
+              type="time"
+              id="time_start"
+              name="time_start"
+              value={formData.time_start}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="venue_name">Venue Name</label>
+            <input
               type="text"
+              id="venue_name"
               name="venue_name"
               placeholder="Enter event venue"
+              value={formData.venue_name}
               onChange={handleChange}
-              required
             />
           </div>
 
-          
           <div className="form-group">
-            <label htmlFor="location">Venue Location:</label>
+            <label htmlFor="venue_location">Venue Location</label>
             <input
-              id="location"
               type="text"
+              id="venue_location"
               name="venue_location"
               placeholder="Enter event location"
+              value={formData.venue_location}
               onChange={handleChange}
-              required
             />
           </div>
 
-          
           <div className="form-group">
-            <label htmlFor="capacity">Venue Capacity:</label>
+            <label htmlFor="venue_capacity">Venue Capacity</label>
             <input
-              id="capacity"
               type="number"
+              id="venue_capacity"
               name="venue_capacity"
-              min="1"
               placeholder="Enter venue capacity"
+              value={formData.venue_capacity}
               onChange={handleChange}
-              required
+              min="1"
             />
           </div>
 
-          
           <div className="form-group">
-            <label htmlFor="vip-price">VIP Ticket Price (Rs):</label>
+            <label htmlFor="vip_price">VIP Ticket Price (Rs)</label>
             <input
-              id="vip-price"
               type="number"
+              id="vip_price"
               name="vip_price"
-              min="0"
-              step="0.01"
               placeholder="Enter ticket price"
+              value={formData.vip_price}
               onChange={handleChange}
-              required
+              step="0.01"
+              min="0"
             />
           </div>
 
-          
           <div className="form-group">
-            <label htmlFor="general-price">General Ticket Price (Rs):</label>
+            <label htmlFor="common_price">General Ticket Price (Rs)</label>
             <input
-              id="general-price"
               type="number"
+              id="common_price"
               name="common_price"
-              min="0"
-              step="0.01"
               placeholder="Enter ticket price"
+              value={formData.common_price}
               onChange={handleChange}
-              required
+              step="0.01"
+              min="0"
             />
           </div>
 
-         
           <div className="form-group">
-            <label htmlFor="image">Event Image:</label>
+            <label htmlFor="image">Event Image *</label>
             <input
               type="file"
               id="image"
               name="image"
               accept="image/*"
-              onChange={(e) => setImageData(e.target.files[0])}
+              onChange={handleFileChange}
               required
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="description">Event Description:</label>
+            <label htmlFor="description">Event Description</label>
             <textarea
               id="description"
               name="description"
-              rows="5"
               placeholder="Provide event details..."
+              value={formData.description}
               onChange={handleChange}
-              required
+              rows="5"
             />
           </div>
 
           <div className="post">
-            <button type="submit" value="submit">
-              Create Event
-            </button>
+            <button type="submit">Create Event</button>
           </div>
         </form>
       </div>
     </div>
   );
 };
-
 
 export default CreateEvent;

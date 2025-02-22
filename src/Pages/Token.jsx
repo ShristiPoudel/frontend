@@ -48,8 +48,8 @@ const Token = () => {
   
         const role = response.data.role;
 
-        localStorage.setItem("authToken",response.data.token);
-        console.log(localStorage.setItem("authToken,response.data.token"));
+        localStorage.setItem("authToken", response.data.token);
+         console.log("Auth Token set:", response.data.token);
         
         console.log("Token verified:", response.data);
         loginUser({
@@ -66,10 +66,12 @@ const Token = () => {
       } else {
         navigate('/attendee-dashboard');
       }
-      } catch (err) {
-        console.error("Token verification error:", err.response?.data);
-        setError(err.response?.data?.message || 'Invalid token. Please try again.');
-      } finally {
+      } 
+        catch (err) {
+          console.error("Token verification error:", err);
+          setError(err.response?.data?.message || 'Invalid token. Please try again.');
+      }
+      finally {
         setIsSubmitting(false);
       }
     };
