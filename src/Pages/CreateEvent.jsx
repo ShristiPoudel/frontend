@@ -67,7 +67,7 @@ const CreateEvent = () => {
         
         <form className="post-event-fields" onSubmit={handleSubmit} encType="multipart/form-data">
           <div className="form-group">
-            <label htmlFor="title">Event Title *</label>
+            <label htmlFor="title">Event Title:</label>
             <input
               type="text"
               id="title"
@@ -80,7 +80,7 @@ const CreateEvent = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="category">Event Category *</label>
+            <label htmlFor="category">Event Category:</label>
             <select 
               id="category"
               name="category" 
@@ -97,7 +97,7 @@ const CreateEvent = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="event_dates">Event Date *</label>
+            <label htmlFor="event_dates">Event Date:</label>
             <input
               type="date"
               id="event_dates"
@@ -109,7 +109,7 @@ const CreateEvent = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="time_start">Event Time *</label>
+            <label htmlFor="time_start">Event Time:</label>
             <input
               type="time"
               id="time_start"
@@ -121,7 +121,7 @@ const CreateEvent = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="venue_name">Venue Name</label>
+            <label htmlFor="venue_name">Venue Name:</label>
             <input
               type="text"
               id="venue_name"
@@ -133,7 +133,7 @@ const CreateEvent = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="venue_location">Venue Location</label>
+            <label htmlFor="venue_location">Venue Location:</label>
             <input
               type="text"
               id="venue_location"
@@ -145,7 +145,7 @@ const CreateEvent = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="venue_capacity">Venue Capacity</label>
+            <label htmlFor="venue_capacity">Venue Capacity:</label>
             <input
               type="number"
               id="venue_capacity"
@@ -158,7 +158,7 @@ const CreateEvent = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="vip_price">VIP Ticket Price (Rs)</label>
+            <label htmlFor="vip_price">VIP Ticket Price (Rs):</label>
             <input
               type="number"
               id="vip_price"
@@ -172,7 +172,7 @@ const CreateEvent = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="common_price">General Ticket Price (Rs)</label>
+            <label htmlFor="common_price">General Ticket Price (Rs):</label>
             <input
               type="number"
               id="common_price"
@@ -186,7 +186,7 @@ const CreateEvent = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="image">Event Image *</label>
+            <label htmlFor="image">Event Image:</label>
             <input
               type="file"
               id="image"
@@ -198,7 +198,7 @@ const CreateEvent = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="description">Event Description</label>
+            <label htmlFor="description">Event Description:</label>
             <textarea
               id="description"
               name="description"
@@ -210,7 +210,7 @@ const CreateEvent = () => {
           </div>
 
           <div className="post">
-            <button type="submit">Create Event</button>
+            <button type="submit">Create Event:</button>
           </div>
         </form>
       </div>

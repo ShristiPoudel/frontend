@@ -1,7 +1,7 @@
 import React,{useEffect,useState} from 'react'
 import api from '../../api/config';
 import './Template.css'
-
+import { GoHeart } from "react-icons/go"; 
 const Template = () => {
 
     const [eventList,setEventList] = useState([]);
@@ -23,6 +23,14 @@ const Template = () => {
       
       fetchEvents();
     }, []);
+
+    const handleFavorite = (eventId) => {
+      console.log('Added to favorites:', eventId);
+    };
+  
+    const handleBuyTicket = (eventId) => {
+      console.log('Buy ticket for:', eventId);
+    };
   
 
     return (
@@ -33,6 +41,11 @@ const Template = () => {
           
           {eventList.map((events,index) =>{
             return <div key={index}>
+              <div className="favorite-btn-container">
+              <button className="favorite-btn" onClick={() => handleFavorite(events.id)}>
+                <GoHeart/> 
+              </button>
+            </div>
              <img src={events.image} alt={`image ${index}`} />
              <p>{events.title}</p>
              <div className='event-category'>{events.category.map((cat,catIndex)=>{
@@ -48,6 +61,12 @@ const Template = () => {
           </div>
             <div className="interest-count">Interested:{events.interest_count}</div>
             
+            <div className="buy-ticket-btn-container">
+              <button className="buy-ticket-btn" onClick={() => handleBuyTicket(events.id)}>
+                Buy Ticket
+              </button>
+            </div>
+
     
             </div>
           })}

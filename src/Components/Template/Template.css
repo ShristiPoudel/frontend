@@ -1,21 +1,21 @@
+.template-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    height: 90vh;
+    padding: 0; 
+}
 
-/* .template-container{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        height: 90vh;
- } */
-
-
-.template-container h2{
+.template-container h2 {
     padding: 7px;
     margin-top: 15px;
-    color: #171717;  
+    color: #171717;
     font-size: 35px;
-    font-weight: 600px;
+    font-weight: 600;
 }
-.template-container hr{
+
+.template-container hr {
     width: 119px;
     height: 4px;
     border-radius: 10px;
@@ -23,41 +23,107 @@
     margin-left: 10px;
 }
 
-.template-design{
-    width: 350px ;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap:10px;
-}
-
-.template-design img{
-    height: 300px;
-    width: 300px;
-    border-radius: 12px;
-}
-
-
-.template-design p{
-    margin: 6px 0px;
-}
-
-.event-category{
-    color: #8c8c8c;
-}
-
-.time-date  {
-    display: flex;
-    /* flex-direction: row; */
+.template-design {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
     gap: 20px;
+    width: 100%;
+    max-width: 100%; 
+    margin: 0; 
+    padding: 0; 
+}
+
+.template-design > div {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.template-design > div:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.template-design img {
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 12px 12px 0 0;
+}
+
+.template-design p {
+    margin: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #171717;
+}
+
+.event-category {
+    margin: 10px;
     color: #8c8c8c;
+    font-size: 14px;
 }
 
-.template-design img:hover{
-    transform: scale(1.05);
-    transition:0.6s ;
+.time-date {
+    display: flex;
+    gap: 10px;
+    margin: 10px;
+    color: #8c8c8c;
+    font-size: 14px;
 }
 
+.interest-count {
+    margin: 10px;
+    color: #8c8c8c;
+    font-size: 14px;
+}
 
-
-
+.favorite-btn-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1; 
+  }
+  
+  .favorite-btn {
+    background: rgba(255, 255, 255, 0.8); 
+    border: none;
+    border-radius: 50%;
+    padding: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: color 0.3s ease; 
+  }
+  
+  .favorite-btn:hover {
+    color:#ff4757; 
+  }
+  
+  
+  .buy-ticket-btn-container {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    z-index: 1; 
+  }
+  
+  .buy-ticket-btn {
+    background: #2C9CF0; 
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease;
+  }
+  
+  .buy-ticket-btn:hover {
+    background: #1b7dc4; 
+  }
+  
