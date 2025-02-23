@@ -2,12 +2,17 @@ import React,{useEffect,useState} from 'react'
 import api from '../../api/config';
 import './Template.css'
 import { GoHeart } from "react-icons/go"; 
-const Template = () => {
+const Template = ({eventList:searchResults=[]}) => {
 
     const [eventList,setEventList] = useState([]);
     useEffect(() => {
+
+      if (searchResults.length > 0) {
+        setEventList(searchResults);
+        return;
+      }
       async function fetchEvents() {
-      
+      try{
           const token = localStorage.getItem('authToken'); 
           
           
@@ -18,7 +23,10 @@ const Template = () => {
           });
           console.log("Events:", response.data);
           setEventList(response.data);
-         
+        }
+        catch(error){
+          console.log("Error fetching events:",error)
+        }
       }
       
       fetchEvents();
@@ -35,8 +43,8 @@ const Template = () => {
 
     return (
        <div className="template-container">
-     <h2>Events</h2>
-          <hr />
+      <h2>{searchResults.length > 0 ? "Search Results" : "Events"}</h2>
+          {/* <hr /> */}
         <div className='template-design'>
           
           {eventList.map((events,index) =>{
