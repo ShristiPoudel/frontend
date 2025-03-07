@@ -12,7 +12,7 @@ const Hero = () => {
     
     <div className="hero-container">
     <div className='hero'>
-         <ImageSlider effectDelay={500} autoPlayDelay={2000} infinite >
+         <ImageSlider effectDelay={500} autoPlayDelay={2000} infinite  >
       <Slide>
         <img alt="hero" src={hero} />
       </Slide>

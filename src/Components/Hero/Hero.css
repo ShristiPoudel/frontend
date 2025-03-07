@@ -1,7 +1,11 @@
-*{
+
+* {
   margin: 0;
   padding: 0;
 }
+
+
+
 
 .book-now-container {
   position: absolute;
@@ -10,7 +14,6 @@
   transform: translateY(-50%);
   text-align: left;
   color: white;
-  
 }
 
 .book-now-container h2 {

@@ -33,6 +33,7 @@
     max-width: 95%; 
     margin: 10px; 
     padding: 0; 
+    cursor: pointer;
 }
 
 .template-design > div {

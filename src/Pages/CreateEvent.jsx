@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./CSS/CreateEvent.css"; 
 import api from '../api/config';
 
@@ -52,16 +54,18 @@ const CreateEvent = () => {
           Authorization: `Token ${token}`,
         },
       });
-      alert("Event created successfully!");
+      toast.success("Event created successfully!");
       console.log(response.data);
     } catch (error) {
       console.error("Error creating event:", error.response?.data || error.message);
       setError(error.response?.data || "An error occurred");
+      toast.error("Failed to create event. Please try again.");
     }
   };
 
   return (
     <div className="create-container">
+      <ToastContainer />
       <div className="create-event">
         <h1>Create an Event</h1>
         {error && <div className="error-message">{JSON.stringify(error)}</div>}

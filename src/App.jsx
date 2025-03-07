@@ -19,6 +19,7 @@ import Logout from './Pages/Logout';
 import Events from './Pages/Events';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Explore from './Pages/Explore';
 
 const App = () => {
   const {user, isLoggedIn, loginUser, logoutUser, loading } = useAuth();
@@ -35,6 +36,7 @@ const App = () => {
       <Routes>
         {/* Public routes accessible to everyone */}
         <Route path="/" element={<Homepage />} />
+        <Route path = "explore" element={<Explore/>} />
         <Route path="events" element={<Events />} />
         <Route path="contactus" element={<ContactUs />} />
         <Route path="feedback" element={<Feedback />} />

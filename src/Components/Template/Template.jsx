@@ -2,9 +2,12 @@ import React,{useEffect,useState} from 'react'
 import api from '../../api/config';
 import './Template.css'
 import { GoHeart } from "react-icons/go"; 
-const Template = ({eventList:searchResults=[]}) => {
+import { useNavigate } from 'react-router-dom';
 
-    const [eventList,setEventList] = useState([]);
+
+const Template = ({eventList:searchResults=[]}) => {
+   const navigate = useNavigate();
+   const [eventList,setEventList] = useState([]);
     useEffect(() => {
 
       if (searchResults.length > 0) {
@@ -48,7 +51,14 @@ const Template = ({eventList:searchResults=[]}) => {
         <div className='template-design'>
           
           {eventList.map((events,index) =>{
-            return <div key={index}>
+            return <div 
+            onClick={() => navigate("/explore",{
+              state:{
+                events,
+              }
+            })
+          }
+             key={index}>
               <div className="favorite-btn-container">
               <button className="favorite-btn" onClick={() => handleFavorite(events.id)}>
                 <GoHeart/> 
