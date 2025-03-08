@@ -8,32 +8,39 @@ import { useNavigate } from 'react-router-dom';
 const Template = ({eventList:searchResults=[]}) => {
    const navigate = useNavigate();
    const [eventList,setEventList] = useState([]);
-    useEffect(() => {
+  
+  
+   useEffect(() => {
+    if (searchResults.length > 0) {
+      setEventList(searchResults);
+      return;
+    }
+  
+    async function fetchEvents() {
+      try {
+        const token = localStorage.getItem('authToken'); 
+  
+        const headers = token
+          ? { Authorization: `Token ${token}` } 
+          : {}; 
+  
+        const response = await api.get('/events/public-events/', { headers });
+  
+        console.log("Events:", response.data);
+        setEventList(response.data);
+      } catch (error) {
+        console.error("Error fetching events:", error);
 
-      if (searchResults.length > 0) {
-        setEventList(searchResults);
-        return;
-      }
-      async function fetchEvents() {
-      try{
-          const token = localStorage.getItem('authToken'); 
-          
-          
-          const response = await api.get('/events/public-events/', {
-            headers: {
-              Authorization: `Token ${token}`,
-            },
-          });
-          console.log("Events:", response.data);
-          setEventList(response.data);
-        }
-        catch(error){
-          console.log("Error fetching events:",error)
+        if (error.response && error.response.status === 401) {
+          console.warn("Unauthorized access. Showing public events only.");
+          setEventList([]); 
         }
       }
-      
-      fetchEvents();
-    }, []);
+    }
+  
+    fetchEvents();
+  }, []);
+  
 
     const handleFavorite = (eventId) => {
       console.log('Added to favorites:', eventId);
